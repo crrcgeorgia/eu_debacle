@@ -14,6 +14,7 @@ e3_chart +
   )
 
 ggsave("visuals/e3_chart.pdf", device = cairo_pdf,  width = 35, height = 10, units = "cm")
+ggsave("visuals/e3_chart.png", width = 35, height = 10, units = "cm")
 
 ### , 
 ### q2 crosstab
@@ -49,6 +50,7 @@ eu %>%
 )
 
 ggsave("visuals/eu.pdf", device = cairo_pdf,  width = 35, height = 10, units = "cm")
+ggsave("visuals/eu_en.png", width = 35, height = 10, units = "cm")
 
 
 eu_party %>%
@@ -84,6 +86,7 @@ eu_party %>%
 
 
 ggsave("visuals/eu_xparty.pdf", device = cairo_pdf,  width = 35, height = 10, units = "cm")
+ggsave("visuals/eu_en_xparty.png", width = 35, height = 10, units = "cm")
 
 e6_all %>%
   filter(variable == "Mentioned" | (variable %in% c("Don't know", "Refuse to answer", "Does not imply specific individual/individuals") & variable_name == across_names[1]))%>%
@@ -110,6 +113,7 @@ e6_chart +
   )
 
 ggsave("visuals/e6_all.pdf", device = cairo_pdf,  width = 35, height = 10, units = "cm")
+ggsave("visuals/e6_en_all.png", width = 35, height = 10, units = "cm")
 
 
 # ggsave("visuals/bi_ms.png", width=11.2, height=6.35)
@@ -156,6 +160,7 @@ e4_rec_xtab %>%
 )
 
 ggsave("visuals/e4_xtab.pdf", device = cairo_pdf,  width = 35, height = 15, units = "cm")
+ggsave("visuals/e4_en_xtab.png", width = 35, height = 15, units = "cm")
 
 e7_rec_xtab %>%
   filter(!is.na(by_var))%>%
@@ -191,6 +196,7 @@ e7_rec_xtab %>%
 )
 
 ggsave("visuals/e7_xtab.pdf", device = cairo_pdf,  width = 35, height = 15, units = "cm")
+ggsave("visuals/e7_en_xtab.png", width = 35, height = 15, units = "cm")
 
 
 
