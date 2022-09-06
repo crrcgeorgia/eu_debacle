@@ -1,0 +1,47 @@
+---
+title: "EU membership"
+subtitle: "Draft blog v.0.5"
+author: "David Sichinava"
+date: "`r format(Sys.Date(),'%e %B, %Y')`"
+bibliography: "bib/bibliography.bib"
+csl: "csl/chicago-fullnote-bibliography.csl"
+format:
+  docx:
+    lof: false
+    lot: false
+    toc: false
+    section-numbers: true
+    reference-doc: reference_doc.docx
+  html: default
+  pdf:
+    lof: true
+    lot: true
+---
+
+```{r include=F, eval=TRUE}
+
+library(tidyverse)
+library(extrafont)
+library(ggtext)
+library(ggforce)
+library(xfun)
+library(survey)
+library(srvyr)
+library(svyVGAM)
+library(CMAverse)
+loadfonts(device = "win")
+```
+
+```{r include=F, echo=T, eval=TRUE, cache=TRUE}
+
+# Source functions
+
+source("scripts/00-functions.R")
+source("scripts/01-wrangling.R")
+source("scripts/02-objects.R")
+source("scripts/03-tests.R")
+source("scripts/04-charts.R")
+source("scripts/05-tables.R")
+
+
+```

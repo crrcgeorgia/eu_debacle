@@ -1,0 +1,79 @@
+
+
+  filter(!is.na(weight))%>%
+  mutate(
+    ## Covariates
+    displaced = case_when(
+      d8 %in% c(-2, -1) ~ 0,
+      d8 %in% c(-9, -3) ~ NA_real_,
+      T ~ as.numeric(d8)
+    ),
+    ethnic = case_when(
+      d4 == 3 ~ 1,
+      T ~ 0
+    ),
+    employed = case_when(
+      d2 == 1 ~ 1, # Private sector
+      d2 == 2 ~ 2, # Public sector
+      T ~ 3 # Not working
+    ),
+    agegroup = case_when(
+      age < 35 ~ 1,
+      age >= 35 & age < 55 ~ 2,
+      T ~ 3
+    ),
+    across(starts_with("d7_"), ~case_when(
+      .x %in% c(-2, -7, -1, -5, -9) ~ NA_real_,
+      .x == 1 ~ 1,
+      T ~ 0,
+    )),
+    wealth = rowSums(across(starts_with("d7_"))),
+    internet = case_when(
+      m3 %in% c(1:4) ~ 1,
+      m3 %in% c(-9, -3) ~ NA_real_,
+      T ~ 0
+    ),
+    party = case_when(
+      m11 == 1 ~ 1,
+      m11 == -5 ~ 3,
+      m11 %in% c(-1, -2) ~ 4,
+      m11 %in% c(-9 -3) ~ NA_real_,
+      T ~ 2
+    ),
+    education = case_when(
+      d3 %in% c(1, 2) ~ 1,
+      d3 == 3 ~ 2,
+      d3 %in% c(4, 5) ~ 3,
+      T ~ NA_real_
+      ),
+    education = factor(education, levels =c(1, 2, 3), labels = c("Secondary or lower", "Vocational", "Higher")),
+    agegroup = factor(agegroup, levels = c(1, 2, 3), labels = c("18-34", "35-54", "55+")),
+    party = factor(party, levels = c(1, 2, 3, 4), labels = c("Government", "Opposition", "Unaffiliated", "DK/RA")),
+    employed = factor(employed, levels = c(1:3), labels = c("Private", "Public", "Not working")),
+    settlement = as_factor(stratum),
+    ethnic = factor(ethnic, levels = c(0, 1), labels = c("Other", "Georgian")),
+    sex = as_factor(sex),
+    ## Substantive variables
+    across(starts_with("m8_"), ~case_when(
+      .x %in% c(-9, -3) ~ NA_real_,
+      .x %in% c(-1, -2) ~ 98,
+      .x %in% c(-5) ~ 98,
+      .x %in% c(0) ~ 2,
+      T ~ as.numeric(.x)
+    )),
+    across(starts_with("m8_"), ~factor(
+      .x,
+      levels = c(1, 2, 98),
+      labels = c("Like", "Dislike", "DK/RA/DK this person")
+    ))
+  )%>%
+  labelled::set_variable_labels(
+    agegroup = "Age groups",
+    wealth = "Wealth",
+    internet = "Internet",
+    employed = "Employment",
+    education = "Education",
+    ethnic = "Ethnic ID",
+    party = "Party ID",
+  )  -> w12_coded
+
